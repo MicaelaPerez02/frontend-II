@@ -1,39 +1,22 @@
-import { useState } from 'react';
-import { Modal, Sidebar } from './components';
+import { useState } from "react";
+import { Modal, Sidebar } from "./components";
 import "./App.css";
+import { useToggle } from "./hooks/useToggle";
 
 export default function App() {
-
-  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const openSidebar = () => {
-    setIsOpenSidebar(true);
-  }
-
-  const closeSidebar = () => {
-    setIsOpenSidebar(false);
-  }
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  }
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  }
-
+  const { isOpen: isOpenSidebar, toggle: toggleSidebar } = useToggle();
+  const { isOpen: isOpenModal, toggle: toggleModal } = useToggle();
 
   return (
     <div className="h-screen w-full">
       <div className="container">
-        <Sidebar visible={isOpenSidebar} close={closeSidebar} />
+        <Sidebar visible={isOpenSidebar} close={toggleSidebar} />
         <h1>Custom Hook</h1>
         <div className="button-container">
-          <button onClick={openSidebar}>Open sidebar</button>
-          <button onClick={openModal}>Open modal</button>
+          <button onClick={toggleSidebar}>Open sidebar</button>
+          <button onClick={toggleModal}>Open modal</button>
         </div>
-        <Modal visible={isOpenModal} close={closeModal} />
+        <Modal visible={isOpenModal} close={toggleModal} />
       </div>
     </div>
   );
